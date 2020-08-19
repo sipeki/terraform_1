@@ -74,9 +74,9 @@ resource "aws_security_group" "sg_web" {
   }
 
   egress {
-    from_port  = var.outbound_port
-    protocol   = "-1"
-    to_port    = var.outbound_port
+    from_port   = var.outbound_port
+    protocol    = "-1"
+    to_port     = var.outbound_port
     cidr_blocks = [var.open_internet]
   }
 
@@ -88,6 +88,7 @@ resource "aws_instance" "web" {
   key_name                    = var.key_name
   subnet_id                   = aws_subnet.subnet_a.id
   associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.sg_web.id]
 
   tags = {
 

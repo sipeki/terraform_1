@@ -53,5 +53,5 @@ variable "ingress_ports" {
 
 variable "outbound_port" {
   description = "Port open to allow outbound connection"
-  default    = 0
+  default     = 0
 }
