@@ -43,10 +43,11 @@ resource "aws_route_table" "r" {
 
 }
 
-resource "aws_route_table_association" "a" {
-  subnet_id      = aws_subnet.subnet_a.id
+resource "aws_main_route_table_association" "a" {
+  vpc_id      = aws_vpc.vpc.id
   route_table_id = aws_route_table.r.id
 }
+
 
 resource "aws_instance" "web" {
   ami                         = var.ami_id
