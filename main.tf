@@ -22,39 +22,78 @@ resource "aws_subnet" "subnet_a" {
   cidr_block        = var.sn_cidr_block
   availability_zone = data.aws_availability_zones.available.names[0]
 
+  tags = {
+    Name = "Subnet for VPC190820"
+
+  }
+
 }
 
-resource "aws_internet_gateway" "gw" {
+resource "aws_internet_gateway" "vpc_igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "main"
+    Name = "VPC GW"
   }
 }
 
-resource "aws_route_table" "r" {
+
+resource "aws_route_table" "vpc_rt" {
   vpc_id = aws_vpc.vpc.id
 
   route {
-    cidr_block = var.sn_cidr_block
-    gateway_id = aws_internet_gateway.gw.id
+    cidr_block = var.open_internet
+    gateway_id = aws_internet_gateway.vpc_igw.id
+  }
+
+  tags = {
+    Name = "RT for VPC190820"
+  }
+}
+
+resource "aws_route_table_association" "rta" {
+  subnet_id      = aws_subnet.subnet_a.id
+  route_table_id = aws_route_table.vpc_rt.id
+}
+
+resource "aws_security_group" "sg_web" {
+  name        = var.sg_web_name
+  description = var.sg_web_description
+  vpc_id      = aws_vpc.vpc.id
+
+  dynamic "ingress" {
+    iterator = port
+    for_each = var.ingress_ports
+    content {
+      from_port   = port.value
+      protocol    = "tcp"
+      to_port     = port.value
+      cidr_blocks = [var.open_internet]
+
+    }
+  }
+
+  egress {
+    from_port  = var.outbound_port
+    protocol   = "-1"
+    to_port    = var.outbound_port
+    cidr_blocks = [var.open_internet]
   }
 
 
 }
-
-resource "aws_main_route_table_association" "a" {
-  vpc_id      = aws_vpc.vpc.id
-  route_table_id = aws_route_table.r.id
-}
-
-
 resource "aws_instance" "web" {
   ami                         = var.ami_id
   instance_type               = var.instance
   key_name                    = var.key_name
   subnet_id                   = aws_subnet.subnet_a.id
   associate_public_ip_address = true
+
+  tags = {
+
+    name = "EC2 for VPC190820"
+
+  }
 }
 
 
