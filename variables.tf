@@ -8,12 +8,12 @@ variable "instance" {
   default     = "t2.micro"
 }
 
-variable "ami" {
+variable "ami_id" {
   description = "This variable states the ami for your EC2"
   default     = "ami-07ee42ba0209b6d77"
 }
 
-variable "key" {
+variable "key_name" {
   description = "This variable states the key name for your EC2"
   default     = "simon"
 }
