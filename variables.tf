@@ -23,4 +23,8 @@ variable "cred" {
   default     = "~/.aws/credentials"
 }
 
+variable "cidr_block" {
+  default     = "192.168.0.0/16"
+  description = "the cider blcok"
+}
 
