@@ -1,3 +1,8 @@
+variable "cred" {
+  description = "This variable states the credential location"
+  default     = "~/.aws/credentials"
+}
+
 variable "region" {
   description = "This variable states the region for the AWS environment"
   default     = "eu-west-1"
@@ -16,11 +21,6 @@ variable "ami_id" {
 variable "key_name" {
   description = "This variable states the key name for your EC2"
   default     = "simon"
-}
-
-variable "cred" {
-  description = "This variable states the credential location"
-  default     = "~/.aws/credentials"
 }
 
 variable "cidr_block" {
