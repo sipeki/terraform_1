@@ -20,3 +20,7 @@ variable "outbound_port" {
   description = "Port open to allow outbound connection"
   default     = 0
 }
+
+variable "vpc_id" {
+  description = "default vpc id"
+}

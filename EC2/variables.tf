@@ -12,3 +12,13 @@ variable "key_name" {
   description = "This variable states the key name for your EC2"
   default     = "simon"
 }
+
+variable "subnet_id" {
+  description = "subnet ID for EC2"
+
+}
+
+variable "sg_ids" {
+  description = "security group ID for EC2"
+
+}

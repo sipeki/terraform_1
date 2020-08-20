@@ -9,6 +9,14 @@ module "sipeki_vpc" {
 }
 
 module "sipeki_instance" {
-  source = "./EC2"
+  source    = "./EC2"
+  subnet_id = module.sipeki_vpc.subnet_a_id
+  sg_ids    = module.sipeki_sg.sg_ids
+
+}
+
+module "sipeki_sg" {
+  source = "./SG"
+  vpc_id = module.sipeki_vpc.vpc_id
 
 }
